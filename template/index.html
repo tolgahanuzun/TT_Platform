@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block index%}
+
+
+{% if request.user.is_authenticated %}
+<div class="container" style="margin-top: 70px;">
+
+
+	<div class="col-sm-9" > 
+		<a href="/twitter">Twitter Go To</a>
+		<a href="/twitter/user">Yeap Follow!</a>
+
+	</div>
+</div>		
+
+
+{% elif not request.user.is_authenticated %}
+<div class="container">
+	<div class="row">
+		<div class="col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
+			<br><br><br>
+			<h1 class="title">
+
+			</h1>
+		</div>
+	</div>	
+</div>
+
+{% endif %}
+
+
+{% endblock %}

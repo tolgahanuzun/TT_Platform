@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block register %}
+<div class="container text-center" style="margin-top: 20px;">
+  <div class="row">
+        <form class="form-horizontal" role="form" method="POST" action="/register/">
+            <hr>
+            <div id="legend">
+              <legend class="">Register</legend>
+            </div>
+
+        {% csrf_token %}
+
+        {% for register in form %}
+        
+        {% if register.name == "first_name" %}
+        <div class="control-group">      
+            <label id="icon" for="first_name"><i class="fa fa-user control-label"></i></label>
+
+            <input type="text" name="{{ register.name }}" id="id_{{ register.name }}"
+            placeholder="first_name" tabindex="1" required/>
+        </div>
+
+        {% elif register.name == "last_name" %}    
+        <div class="control-group">
+            <label id="icon" for="last_name"><i class="fa fa-user control-label"></i></label>
+            <input type="text" name="{{ register.name }}" id="id_{{ register.name }}"
+            placeholder="last_name" tabindex="2"  required/>
+        </div>
+
+        {% elif register.name == "username" %} 
+        <div class="control-group">
+            <label id="icon" for="username"><i class="fa fa-user control-label"></i></label>
+            <input type="text" name="{{ register.name }}" id="id_{{ register.name }}"
+             placeholder="username" tabindex="3" required/>
+        </div>
+        {% elif register.name == "email" %} 
+        <div class="control-group">
+            <label id="icon" for="email"><i class="fa fa-user control-label"></i></label>
+            <input type="text" name="{{ register.name }}" id="id_{{ register.name }}"
+            placeholder="email" tabindex="4"  required/>
+        </div>   
+       
+        {% elif register.name == "password1" %}     
+        <div class="control-group">
+            <label id="icon" for="departmenname"><i class="fa fa-user control-label"></i></label>
+            <input type="password" name="{{ register.name }}" id="id_{{ register.name }}"
+            placeholder="password1" tabindex="6"  required/>
+        </div>    
+        {% elif register.name == "password2" %}     
+        <div class="control-group">   
+            <label id="icon" for="departmenname"><i class="fa fa-user control-label"></i></label>
+            <input type="password" name="{{ register.name }}" id="id_{{ register.name }}"
+            placeholder="password2" tabindex="7" required/>        
+        </div>    
+
+        <div class="control-group">
+             <input class="btn btn-succes center-block" type="submit" value="Ekle"/>
+        </div>
+        {% endif %} 
+
+        {% endfor %}    
+
+
+            <!-- {{ form.as_table }}    
+            <input class="button" type="submit" value="Ekle"/>     -->
+
+     </form> 
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block login %}
+
+<div class="container text-center" style="margin-top: 20px;">
+    <div class="row ">
+        <form action="/login/" method="post" class="form-horizontal" >
+        {% csrf_token %}
+        <hr>
+        
+            <div id="legend">
+              <legend class="">Login Panel</legend>
+            </div>
+        
+            <div class="control-group">   
+                
+                <input type="text" name='username'  placeholder="username" required="" autofocus="" style="display: inline;">
+            </div>
+            <div class="control-group">   
+               
+                <input type="password" name='password'   placeholder="Password" required="" style="display: inline;">
+            </div>
+            <br>
+            <div class="control-group">   
+                <button class="btn btn-success text-center" type="submit">Sign in</button>
+            </div>
+        </form>   
+    </div>  
+</div>
+
+
+
+
+
+
+{% endblock %}
