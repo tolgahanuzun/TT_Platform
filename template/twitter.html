@@ -3,33 +3,80 @@
 {% block twitter%}
 
 <div class="container" style="margin-top: 70px;">
+
+{% if trends %}
 <div class="col-sm-4" > 
 
-{% if 1 == 2 %}
+
 	{% for trend in trends %}
 		{% if forloop.counter0 < 15 %}
 
 <h4> {{ forloop.counter }}. {{ trend.name }} </h4>
 
-		{% endif %}	
+		{% endif %} 
 	{% endfor %}
-{% endif %}
+
 
 </div>
+{% endif %}
 
+<!-- -->
+{% if backusers %}
 <div class="col-sm-4" >
 
 	{% for backuser in backusers %}
 
-
 <h4> {{ forloop.counter }}.{{ backuser}} </h4>
 
-	
 	{% endfor %}
 
 </div>
+{% endif %}
 
-</div>		
+<!-- -->
+{% if rtusers %}
+<div class="col-sm-4" >
+
+	{% for rtuser in rtusers %}
+
+<h4> {{ forloop.counter }}.{{ rtuser}} </h4>
+
+	{% endfor %}
+
+</div>
+{% endif %}
+
+
+<!-- -->
+{% if form %}
+
+<div class="col-sm-4" >
+
+	<form method="POST" class="post-form">{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit" class="save btn btn-default">Kaydet</button>
+	</form>
+
+
+</div>
+{% endif %}
+<!-- -->
+
+<!-- -->
+{% if form2 %}
+
+<div class="col-sm-4" >
+
+	<form method="POST" class="post-form">{% csrf_token %}
+		{{ form2.as_p }}
+		<button type="submit" class="save btn btn-default">Kaydet</button>
+	</form>
+
+
+</div>
+{% endif %}
+
+</div>      
 
 
 {% endblock %}
