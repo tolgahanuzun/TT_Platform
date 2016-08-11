@@ -7,3 +7,20 @@ class Populer(models.Model):
 	
 	def __unicode__(self):
 		return "%s" % (self.twitter_name)
+
+
+class Kac_Kullanici(models.Model):
+	insan_limiti = models.IntegerField(default=10)
+
+	def __unicode__(self):
+		return "%s" % ("limit")
+
+class Rt_Kullanicimodel(models.Model):
+	rt_name = models.IntegerField()
+	
+	def __unicode__(self):
+		return "%s" % (self.rt_name)
+
+class Rt_Kacmodel(models.Model):
+	rt_limiti = models.IntegerField(default=11)
+
