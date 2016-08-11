@@ -19,7 +19,7 @@ def login(request):
 			user = authenticate(username=username, password=password)
 			if user is not None:
 				auth_login(request, user)
-				return HttpResponseRedirect("/index/")
+				return HttpResponseRedirect("/")
 			else:
 				context['error'] = 'Non active user'
 		except:
