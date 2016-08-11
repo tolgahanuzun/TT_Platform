@@ -27,6 +27,10 @@ urlpatterns = [
 	url(r'^logout/',profile_views.logout),
 	url(r'^twitter/$',twitter_views.trend),
 	url(r'^twitter/user$',twitter_views.Twitter_User),
+	url(r'^twitter/fallow/$', twitter_views.twitter_fallow, name='Twitter_fallow'),
+	url(r'^twitter/add/username$', twitter_views.Twitter_User, name='Twitter_User'),
+	url(r'^twitter/rt/$', twitter_views.Rt_fallow, name='Twitter_rt'),
+	url(r'^twitter/add/rt$', twitter_views.Twitter_Rt, name='Twitter_rtadd'),
 	url(r'^$',profile_views.home)
 
 ]
