@@ -17,6 +17,8 @@ from django.conf.urls import include,url
 from django.contrib import admin
 from profiles import views as profile_views
 from twitter import views as twitter_views
+from tumblr import views as tumblr_views
+
 
 
 
@@ -31,6 +33,9 @@ urlpatterns = [
 	url(r'^twitter/add/username$', twitter_views.Twitter_User, name='Twitter_User'),
 	url(r'^twitter/rt/$', twitter_views.Rt_fallow, name='Twitter_rt'),
 	url(r'^twitter/add/rt$', twitter_views.Twitter_Rt, name='Twitter_rtadd'),
+	url(r'^tumblr/like$', tumblr_views.Top_Like, name='Tumblr_Like'),
+
+
 	url(r'^$',profile_views.home)
 
 ]
