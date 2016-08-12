@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block tumblr %}
+<div class="container" style="margin-top: 70px;">
+    {% if like_user %}
+<div class="col-sm-4" > 
+
+
+	{% for like in like_user %}
+		
+<h4> {{ forloop.counter }}. {{ like }} </h4>
+
+	{% endfor %}
+
+
+</div>
+{% endif %}
+
+ {% if error %}
+<div class="col-sm-4" > 
+
+{{ error }} 
+
+</div>
+{% endif %}
+
+</div>
+{% endblock %}
