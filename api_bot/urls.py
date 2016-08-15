@@ -27,6 +27,7 @@ urlpatterns = [
 	url(r'^register/',profile_views.register),
 	url(r'^login/',profile_views.login),
 	url(r'^logout/',profile_views.logout),
+	url(r'^keycreate$', profile_views.keyupdate, name='Key_update'),
 	url(r'^twitter/$',twitter_views.trend),
 	url(r'^twitter/user$',twitter_views.Twitter_User),
 	url(r'^twitter/fallow/$', twitter_views.twitter_fallow, name='Twitter_fallow'),
