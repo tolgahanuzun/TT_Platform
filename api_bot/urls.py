@@ -34,6 +34,10 @@ urlpatterns = [
 	url(r'^twitter/rt/$', twitter_views.Rt_fallow, name='Twitter_rt'),
 	url(r'^twitter/add/rt$', twitter_views.Twitter_Rt, name='Twitter_rtadd'),
 	url(r'^tumblr/like$', tumblr_views.Top_Like, name='Tumblr_Like'),
+	url(r'^tumblr/add/img$', tumblr_views.Img_Posts, name='Tumblr_imgpost'),
+	url(r'^tumblr/post/img$', tumblr_views.Push_Img, name='Tumblr_post'),
+
+
 
 
 	url(r'^$',profile_views.home)
