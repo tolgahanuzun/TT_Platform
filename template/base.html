@@ -35,6 +35,8 @@
                     <ul class="dropdown-menu" role="menu">
                         <li class="divider"></li>
                         <li><a href="/logout/">Logout</a></li>
+                        <li><a href="/admin/">Admin</a></li>
+
                     </ul>
                 </li>
             {% elif not request.user.is_authenticated %}
@@ -56,6 +58,7 @@
     {% block twitter_rt %}{% endblock %}
     {% block tumblr_add %}{% endblock %}
     {% block tumblr %}{% endblock %}
+    {% block user_key %}{% endblock %}
 
 
 </body>
