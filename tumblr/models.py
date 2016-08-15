@@ -11,3 +11,9 @@ class Like_Limit(models.Model):
 
 	def __unicode__(self):
 		return "%s" % (self.like)
+
+class Img_Post(models.Model):
+	urllink = models.CharField(max_length=200)
+
+	def __unicode__(self):
+		return "%s" % (self.urllink)
