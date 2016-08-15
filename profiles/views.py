@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from django.http import *
 from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
-from profiles.forms import LoginForm, RegistrationForm
+from profiles.forms import LoginForm, RegistrationForm, KeyCreateForm
 from profiles.models import Profile
 from django.utils import timezone
 
@@ -79,3 +79,22 @@ def home(request):
 					  {'currentTime':currentTime})
 	else:
 		return render(request, "index.html")
+
+def keyupdate(request):
+	if request.user.is_authenticated():
+		form = KeyCreateForm()
+		if request.method == "POST":
+			form = KeyCreateForm(request.POST, user=request.user)
+			if form.is_valid():
+				form.change()
+
+				return render(request,'user_key.html',{'update':""})
+			else:
+				return render(request,'user_key.html',{'form': form})	
+		else:			
+			return render(request,'user_key.html',{'form': form})		
+	else:
+		return render(request,'index.html')
+
+
+
