@@ -47,3 +47,37 @@ class RegistrationForm(UserCreationForm):
 			user.save()
 		
 		return user
+
+
+
+class KeyCreateForm(forms.Form):
+	first_name = forms.CharField(label=u"First Name", required=True)
+	last_name = forms.CharField(label=u"Last Name", required=True)
+	consumer_keys = forms.CharField(label=u"Consumer keys", required=True)
+	consumer_secrets = forms.CharField(label=u"Consumer secrets", required=True)
+	access_tokens = forms.CharField(label=u"Access Tokens", required=True)
+	access_token_secrets = forms.CharField(label=u"Access token_secrets", required=True)
+
+
+	def __init__(self, *args, **kwargs):
+		self.user = kwargs.pop('user', None)
+		super(KeyCreateForm, self).__init__(*args, **kwargs)
+
+	def change(self):
+		user_profile = Profile.objects.get(user=self.user)
+		print 1
+		data = self.cleaned_data
+
+		self.user.first_name = data.get("first_name")
+		self.user.last_name = data.get("last_name")
+		self.user.save()	
+		
+		user_profile.profile = self.user
+		user_profile.consumer_keys = data.get("consumer_keys")
+		user_profile.consumer_secrets = data.get("consumer_secrets")
+		user_profile.access_tokens = data.get("access_tokens")
+		user_profile.access_token_secrets = data.get("access_token_secrets")
+
+		user_profile.save()
+
+		return self.user
