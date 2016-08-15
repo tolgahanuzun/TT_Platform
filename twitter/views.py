@@ -8,10 +8,10 @@ from models import Populer,Rt_Kullanicimodel
 from .forms import Pupuler_Kullanici,Kac_Kullan,Rt_Kullan,Rt_Kullanici
 
 def twitter_api():
-	consumer_key = "ny12eTofyvNky84aegDJIyEM3"
-	consumer_secret ="g48TGrdxgJKVQptNTUDWZzCUjWHKvaajd2yGUMtbniJFeVIdRJ"
-	access_token = "2489791711-caoYca1na4EtA8LYtojzd6Smxeq7udj3dnWGYsj"
-	access_token_secret = "70mzq65LPBTlP2nLzAsVt6aYd3cXofYGwLrQWKCGkRBVn"
+	consumer_key = "UZ73TD950vW8LkpMJfhDAldNM"
+	consumer_secret ="SVBKnAxjS8Eo115rDFbXLR4nKtYT3K2a3j0SYbbGo4i4f5Zbry"
+	access_token = "2489791711-tqhYv947NKPx9fN02BkjzBxRcEzv4JwBMTEYHG6"
+	access_token_secret = "xyeztY09lAo6DTGMJXc02qnQGKYD3n2u1nGUUXWhr3Jit"
 	
 	auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 	auth.set_access_token(access_token, access_token_secret)
@@ -42,16 +42,18 @@ def twitter_fallow(request):
 			Userlist = Populer.objects.all()
 
 			for tw_user in Userlist:
-				
-				fallow_list = api.followers_ids(tw_user)
-				for x in range(formveri.insan_limiti):
-					try:
-						api.create_friendship(fallow_list[x])			
-						nametw = api.get_user(fallow_list[x])
-						backusers.append(nametw.screen_name)
-					except:
-						print "error"
-
+				try:
+					fallow_list = api.followers_ids(tw_user)
+					for x in range(formveri.insan_limiti):
+						try:
+							api.create_friendship(fallow_list[x])			
+							nametw = api.get_user(fallow_list[x])
+							backusers.append(nametw.screen_name)
+						except:
+							print "error"
+				except:
+					print "error"	
+							
 			return render(request,'twitter.html',{
 			'backusers': backusers
 			})
