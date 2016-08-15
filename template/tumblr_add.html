@@ -1,9 +1,37 @@
 {% extends 'base.html' %}
 
 {% block tumblr_add %}
+    {% if form %}
     <h1>Yeni gönderi</h1>
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Kaydet</button>
     </form>
+    {% endif%}
+
+    {% if imgform %}
+    <h1>Yeni gönderi</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ imgform.as_p }}
+        <button type="submit" class="save btn btn-default">Kaydet</button>
+    </form>
+    {% endif %}
+
+    {% if imgpush %}
+    <h1>Yeni gönderi</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ imgpush.as_p }}
+    <button type="submit" class="save btn btn-default">Kaydet</button>
+    </form>
+    {% endif %}
+
+    
+    {% if imgpush_result %}
+    
+    <br><br>
+    <h2>{{ count }}</h2>
+    
+    {% endif %}
+
+
 {% endblock %}
