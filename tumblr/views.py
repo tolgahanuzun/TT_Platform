@@ -5,23 +5,25 @@ from django.http import *
 from .forms import Like,Img_Post_f,Img_Post_push
 from .models import Img_Post
 from bs4 import BeautifulSoup
+from profiles.models import Profile
 import urllib
 import re
 import pytumblr
 
-def Tumblr_Api():
-	api = pytumblr.TumblrRestClient(
-  '5fu8uRys780qRTnLeJ7FNvrLBcPR4pN0V0BpVHhAxTCF0zTWF7',
-  'bYvbxmeHkLFfqpGOFjfO7vETi1cFUpyOtIdhLImNNkJNZr1Dx7',
-  'TsT9xYtLDXvHwZVSWpL465ecD8o5XMpe0hNolyqNhUzVgPA3yh',
-  'ankADAfxsgkAmA5qbiaE4Y3vPkGjTdHN9JQYFEBU4zM3kiObu0'
-  )
-	return api
+
 
 def Top_Like(request):
-	client = Tumblr_Api()
+
 	form = Like()
 	if request.method == "POST":
+		fields = Profile.objects.get(user=request.user)
+
+		client = pytumblr.TumblrRestClient(fields.consumer_keys,
+			fields.consumer_secrets,
+			fields.access_tokens,
+			fields.access_token_secrets
+			)
+
 		form = Like(request.POST)
 		like_user = []
 		if form.is_valid():
@@ -48,9 +50,15 @@ def Top_Like(request):
 		return render(request, 'tumblr_add.html', {'form': form})
 
 def Img_Posts(request):
-	client = Tumblr_Api()
+
 	form = Img_Post_f()
 	if request.method == "POST":
+		client = pytumblr.TumblrRestClient(fields.consumer_keys,
+			fields.consumer_secrets,
+			fields.access_tokens,
+			fields.access_token_secrets
+			)
+
 		form = Img_Post_f(request.POST)
 		status_post = []
 		if form.is_valid():
@@ -63,9 +71,14 @@ def Img_Posts(request):
 		return render(request, 'tumblr_add.html', {'imgform': form})
 
 def Push_Img(request):
-	client = Tumblr_Api()
+
 	form = Img_Post_push()
 	if request.method == "POST":
+		client = pytumblr.TumblrRestClient(fields.consumer_keys,
+			fields.consumer_secrets,
+			fields.access_tokens,
+			fields.access_token_secrets
+			)
 		Imglists = Img_Post.objects.all()
 		true = 0
 		try:
