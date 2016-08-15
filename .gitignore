@@ -1,4 +1,3 @@
 db.sqlite3
 *.pyc
 migrations/
-tumblr/views.py
