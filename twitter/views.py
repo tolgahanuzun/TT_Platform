@@ -4,8 +4,8 @@ from django.http import *
 import tweepy
 import time
 import json
-from models import Populer,Rt_Kullanicimodel
-from .forms import Pupuler_Kullanici,Kac_Kullan,Rt_Kullan,Rt_Kullanici
+from models import Populer,Rt_Kullanicimodel,Unf_model
+from .forms import Pupuler_Kullanici,Kac_Kullan,Rt_Kullan,Rt_Kullanici,Unf_form
 
 def twitter_api():
 	consumer_key = "UZ73TD950vW8LkpMJfhDAldNM"
@@ -100,6 +100,41 @@ def Rt_fallow(request):
 		return render(request,'twitter.html',{
 			'form2': form2
 			})
+
+def unfollow(request):
+	form3 = Unf_form()
+	if request.method == "POST":
+		form3 = Unf_form(request.POST)
+
+		if form3.is_valid():
+			try:	
+				formveri = form3.save()
+				api = twitter_api()
+				friends = api.friends_ids()
+				unfusers = []
+				for x in range(formveri.unf):
+					try:
+						users = api.get_user(friends[x])
+						api.destroy_friendship(users.screen_name)
+						unfusers.append(users.screen_name)
+						if (x%50 == 0):
+							print "...."
+							time.sleep(10)
+					except:
+						unfusers.append("Error")
+			except:
+				unfusers.append("Error")
+				
+			return render(request,'twitter_add.html',{'unfusers': unfusers})
+		else:
+			return render(request,'twitter_add.html',{'form3': form3})
+	else:
+		return render(request,'twitter_add.html',{'form3': form3})
+
+
+
+
+
 
 
 
