@@ -1,5 +1,5 @@
 from django import forms
-from .models import Populer,Kac_Kullanici,Rt_Kullanicimodel,Rt_Kacmodel
+from .models import Populer,Kac_Kullanici,Rt_Kullanicimodel,Rt_Kacmodel,Unf_model
 
 class Pupuler_Kullanici(forms.ModelForm):
 
@@ -24,3 +24,13 @@ class Rt_Kullan(forms.ModelForm):
 	class Meta:
 		model = Rt_Kacmodel
 		fields = ('rt_limiti',)
+
+
+class Unf_form(forms.ModelForm):
+
+	class Meta:
+		model = Unf_model
+		fields = ('unf',)
+
+
+
