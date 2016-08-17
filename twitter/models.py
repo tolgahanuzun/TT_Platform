@@ -24,3 +24,12 @@ class Rt_Kullanicimodel(models.Model):
 class Rt_Kacmodel(models.Model):
 	rt_limiti = models.IntegerField(default=11)
 
+
+class Unf_model(models.Model):
+	unf = models.IntegerField(default=100)
+	
+	def __unicode__(self):
+		return "%s" % (self.unf)
+
+
+
