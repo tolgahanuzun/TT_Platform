@@ -105,7 +105,8 @@ def Rt_fallow(request):
 
 def trend(request):
 	api = twitter_api()
-	trends= api.trends_place(23424969)
+	c_id= 23424969
+	trends= api.trends_place(c_id)
 	data = trends[0]
 	trends = data['trends']
 	
