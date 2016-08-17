@@ -28,12 +28,16 @@ urlpatterns = [
 	url(r'^login/',profile_views.login),
 	url(r'^logout/',profile_views.logout),
 	url(r'^keycreate$', profile_views.keyupdate, name='Key_update'),
+
 	url(r'^twitter/$',twitter_views.trend),
 	url(r'^twitter/user$',twitter_views.Twitter_User),
-	url(r'^twitter/fallow/$', twitter_views.twitter_fallow, name='Twitter_fallow'),
+	url(r'^twitter/follow/$', twitter_views.twitter_fallow, name='Twitter_follow'),
 	url(r'^twitter/add/username$', twitter_views.Twitter_User, name='Twitter_User'),
 	url(r'^twitter/rt/$', twitter_views.Rt_fallow, name='Twitter_rt'),
 	url(r'^twitter/add/rt$', twitter_views.Twitter_Rt, name='Twitter_rtadd'),
+	url(r'^twitter/add/unf$', twitter_views.unfollow, name='Twitter_unfollow'),
+
+
 	url(r'^tumblr/like$', tumblr_views.Top_Like, name='Tumblr_Like'),
 	url(r'^tumblr/add/img$', tumblr_views.Img_Posts, name='Tumblr_imgpost'),
 	url(r'^tumblr/post/img$', tumblr_views.Push_Img, name='Tumblr_post'),
