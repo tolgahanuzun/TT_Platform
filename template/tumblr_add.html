@@ -34,5 +34,28 @@
     {% endif %}
 
 
+     {% if rtform %}
+    <h1>Yeni gönderi</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ rtform.as_p }}
+        <button type="submit" class="save btn btn-default">Kaydet</button>
+    </form>
+    {% endif %}
+    
+     {% if rtpush %}
+    <h1>Yeni gönderi</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ rtpush.as_p }}
+    <button type="submit" class="save btn btn-default">Kaydet</button>
+    </form>
+    {% endif %}
+
+    
+    {% if rtpush_result %}
+    
+    <br><br>
+    <h2>{{ count }}</h2>
+    
+    {% endif %}
 
 {% endblock %}
