@@ -41,6 +41,7 @@ urlpatterns = [
 	url(r'^tumblr/like$', tumblr_views.Top_Like, name='Tumblr_Like'),
 	url(r'^tumblr/add/img$', tumblr_views.Img_Posts, name='Tumblr_imgpost'),
 	url(r'^tumblr/add/rt$', tumblr_views.Rt_put, name='Tumblr_rtput'),
+	url(r'^tumblr/add/url/follow$', tumblr_views.URL_Follow, name='Tumblr_url_follow'),
 	url(r'^tumblr/post/img$', tumblr_views.Push_Img, name='Tumblr_post'),
 	url(r'^tumblr/post/rt$', tumblr_views.Push_Rr, name='Tumblr_rt_post'),
 
