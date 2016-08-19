@@ -2,7 +2,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.template import Template, Context, RequestContext
 from django.http import *   
-from .forms import Like,Img_Post_f,Img_Post_push,Post_Rt_Put,Post_Rt_Push
+from .forms import Like,Img_Post_f,Img_Post_push,Post_Rt_Put,Post_Rt_Push,T_Url_follow
 from .models import Img_Post,Rt_Put
 from bs4 import BeautifulSoup
 from profiles.models import Profile
@@ -10,20 +10,23 @@ import urllib
 import re
 import pytumblr
 
+def ApiClient(request):
+	fields = Profile.objects.get(user=request.user)
+	api = pytumblr.TumblrRestClient(fields.consumer_keys,
+			fields.consumer_secrets,
+			fields.access_tokens,
+			fields.access_token_secrets
+			)
+	return api
+
 
 
 def Top_Like(request):
 
 	form = Like()
 	if request.method == "POST":
-		fields = Profile.objects.get(user=request.user)
 
-		client = pytumblr.TumblrRestClient(fields.consumer_keys,
-			fields.consumer_secrets,
-			fields.access_tokens,
-			fields.access_token_secrets
-			)
-
+		client = ApiClient(request)
 		form = Like(request.POST)
 		like_user = []
 		if form.is_valid():
@@ -53,13 +56,8 @@ def Img_Posts(request):
 
 	form = Img_Post_f()
 	if request.method == "POST":
-		fields = Profile.objects.get(user=request.user)
-		client = pytumblr.TumblrRestClient(fields.consumer_keys,
-			fields.consumer_secrets,
-			fields.access_tokens,
-			fields.access_token_secrets
-			)
 
+		client = ApiClient(request)
 		form = Img_Post_f(request.POST)
 		status_post = []
 		if form.is_valid():
@@ -73,16 +71,11 @@ def Img_Posts(request):
 
 def Push_Img(request):
 
-	form = Post_Rt_Push()
+	form = Img_Post_push()
 	if request.method == "POST":
-		form = Post_Rt_Push(request.POST)
+		form = Img_Post_push(request.POST)
 		if form.is_valid():
-			fields = Profile.objects.get(user=request.user)
-			client = pytumblr.TumblrRestClient(fields.consumer_keys,
-				fields.consumer_secrets,
-				fields.access_tokens,
-				fields.access_token_secrets
-				)
+			client = ApiClient(request)
 			Imglists = Img_Post.objects.all()
 
 
@@ -143,12 +136,7 @@ def Push_Rr(request):
 	if request.method == "POST":
 		form = Post_Rt_Push(request.POST)
 		if form.is_valid():
-			fields = Profile.objects.get(user=request.user)
-			client = pytumblr.TumblrRestClient(fields.consumer_keys,
-				fields.consumer_secrets,
-				fields.access_tokens,
-				fields.access_token_secrets
-				)
+			client = ApiClient(request)
 			Rtlists = Rt_Put.objects.all()
 
 
@@ -188,7 +176,40 @@ def Push_Rr(request):
 	else:
 		return render(request, 'tumblr_add.html', {'rtpush':form })
 
+def URL_Follow(request):
 
+	form = T_Url_follow()
+	if request.method == "POST":
+		
+		client = ApiClient(request)
+		form = T_Url_follow(request.POST)
+		follow_url_link = []
+		if form.is_valid():
+			
+			urlname = request.POST.get('urlname')
+			
+			htmlcode = urllib.urlopen(urlname).read()
+			soup = BeautifulSoup(htmlcode, 'html.parser')
+		
+			urls = []
+
+			for tag in soup.find_all("a",{"class":"tumblelog"}):
+				urls.append(tag['href'])
+
+			lop = soup.find_all("li",class_="like")
+			for hop in lop:
+				urls.append(hop.find("a")['href'])
+
+			i=1
+			for url in urls:
+				list_data = client.follow(url)
+				follow_url_link.append(url)
+
+			return render(request, 'tumblr_add.html', {'url_rest':urls})
+		else:
+			return render(request, 'tumblr_add.html', {'url_follow': form})
+	else:
+		return render(request, 'tumblr_add.html', {'url_follow': form})
 
 
 
