@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block tumblr_add %}
+<!-- -->
     {% if form %}
     <h1>Yeni gönderi</h1>
     <form method="POST" class="post-form">{% csrf_token %}
@@ -8,6 +9,7 @@
         <button type="submit" class="save btn btn-default">Kaydet</button>
     </form>
     {% endif%}
+<!-- -->     
 
     {% if imgform %}
     <h1>Yeni gönderi</h1>
@@ -16,7 +18,7 @@
         <button type="submit" class="save btn btn-default">Kaydet</button>
     </form>
     {% endif %}
-
+<!-- -->
     {% if imgpush %}
     <h1>Yeni gönderi</h1>
     <form method="POST" class="post-form">{% csrf_token %}
@@ -24,16 +26,14 @@
     <button type="submit" class="save btn btn-default">Kaydet</button>
     </form>
     {% endif %}
-
-    
+   
     {% if imgpush_result %}
     
     <br><br>
     <h2>{{ count }}</h2>
     
     {% endif %}
-
-
+<!-- -->
      {% if rtform %}
     <h1>Yeni gönderi</h1>
     <form method="POST" class="post-form">{% csrf_token %}
@@ -41,7 +41,7 @@
         <button type="submit" class="save btn btn-default">Kaydet</button>
     </form>
     {% endif %}
-    
+<!-- -->    
      {% if rtpush %}
     <h1>Yeni gönderi</h1>
     <form method="POST" class="post-form">{% csrf_token %}
@@ -57,5 +57,24 @@
     <h2>{{ count }}</h2>
     
     {% endif %}
+<!-- -->
+     {% if url_follow %}
+    <h1>Yeni gönderi</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ url_follow.as_p }}
+        <button type="submit" class="save btn btn-default">Kaydet</button>
+    </form>
+    {% endif %}
+
+    {% if url_rest %}
+    <br>
+    {% for url in url_rest %}
+    <h4>{{ forloop.counter }}. {{ url }}</h2>
+    {% endfor %}
+    
+    {% endif %}
+
+<!-- -->
+
 
 {% endblock %}
