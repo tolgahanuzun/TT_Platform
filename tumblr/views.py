@@ -2,8 +2,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.template import Template, Context, RequestContext
 from django.http import *   
-from .forms import Like,Img_Post_f,Img_Post_push
-from .models import Img_Post
+from .forms import Like,Img_Post_f,Img_Post_push,Post_Rt_Put,Post_Rt_Push
+from .models import Img_Post,Rt_Put
 from bs4 import BeautifulSoup
 from profiles.models import Profile
 import urllib
@@ -53,6 +53,7 @@ def Img_Posts(request):
 
 	form = Img_Post_f()
 	if request.method == "POST":
+		fields = Profile.objects.get(user=request.user)
 		client = pytumblr.TumblrRestClient(fields.consumer_keys,
 			fields.consumer_secrets,
 			fields.access_tokens,
@@ -72,37 +73,123 @@ def Img_Posts(request):
 
 def Push_Img(request):
 
-	form = Img_Post_push()
+	form = Post_Rt_Push()
 	if request.method == "POST":
-		client = pytumblr.TumblrRestClient(fields.consumer_keys,
-			fields.consumer_secrets,
-			fields.access_tokens,
-			fields.access_token_secrets
-			)
-		Imglists = Img_Post.objects.all()
-		true = 0
-		try:
-			for Imglist in Imglists:
-				try:
-					post_id= client.create_photo('blogname', 
-					state="queue",
-					tags=["tag"],
-					source=Imglist,
-					caption="""html kod""",
-					format="html",
-					)
-					print Imglist.delete()
-					Post_status = client.dashboard(since_id= post_id)
-					status =Post_status["meta"]
-					true = true+1
-				except:
-					print "error 2"
+		form = Post_Rt_Push(request.POST)
+		if form.is_valid():
+			fields = Profile.objects.get(user=request.user)
+			client = pytumblr.TumblrRestClient(fields.consumer_keys,
+				fields.consumer_secrets,
+				fields.access_tokens,
+				fields.access_token_secrets
+				)
+			Imglists = Img_Post.objects.all()
 
-			return render(request, 'tumblr_add.html', {'imgpush_result': form,'count':true})
 
-		except:		
+			try:
+				formveri = form.save()
+				veri =formveri.context.encode('utf-8')
+				print type(veri)
+				trues = 0
+				for Imglist in Imglists:
+					try:
+						
+						post_id= client.create_photo(formveri.blogname, 
+						state="queue",
+						tags=formveri.tag.split(","),
+						source=Imglist,
+						caption=formveri.context.encode('utf-8'),
+						format="html",
+						)
+						
+						trues = trues+1
+						print Imglist.delete()
+						Post_status = client.dashboard(since_id= post_id)
+						status =Post_status["meta"]
+					except:
+						print "error 2"
+
+				return render(request, 'tumblr_add.html', {'imgpush_result': form,'count':trues})
+
+			except:		
+				print "error 3"
+				return render(request, 'index.html')
+		else:
 			print "error 3"
 			return render(request, 'index.html')
 
 	else:
 		return render(request, 'tumblr_add.html', {'imgpush':form })
+
+def Rt_put(request):
+	form = Post_Rt_Put()
+
+	if request.method == "POST":
+		form = Post_Rt_Put(request.POST)
+		if form.is_valid():
+			formveri = form.save()
+			form = Post_Rt_Put()
+
+			return render(request, 'tumblr_add.html', {'rtform':form})
+		else:
+			return render(request, 'tumblr_add.html', {'rtform': form})
+	else:
+		return render(request, 'tumblr_add.html', {'rtform': form})
+
+
+def Push_Rr(request):
+
+	form = Post_Rt_Push()
+	if request.method == "POST":
+		form = Post_Rt_Push(request.POST)
+		if form.is_valid():
+			fields = Profile.objects.get(user=request.user)
+			client = pytumblr.TumblrRestClient(fields.consumer_keys,
+				fields.consumer_secrets,
+				fields.access_tokens,
+				fields.access_token_secrets
+				)
+			Rtlists = Rt_Put.objects.all()
+
+
+			try:
+				formveri = form.save()
+
+				trues = 0
+				for Rtlist in Rtlists:
+					str_list=str(Rtlist)
+					
+						
+					post_ids = str_list.split("/reblog/")[1].split("/")[0] 
+
+					rt_id 	 = str_list.split("/reblog/")[1].split("/")[1].split("?")[0]
+					print rt_id,post_ids
+
+					post_id= client.reblog(formveri.blogname,
+					id=post_ids,
+					reblog_key=rt_id,
+					comment=formveri.context.encode('utf-8')
+					)
+
+					trues = trues+1
+					print Rtlist.delete()
+					Post_status = client.dashboard(since_id= post_id)
+					status =Post_status["meta"]
+
+				
+				return render(request, 'tumblr_add.html', {'rtpush_result': form,'count':trues})
+
+			except:		
+				print "error 4"
+				return render(request, 'index.html')
+		else:
+			print "error 3"
+			return render(request, 'index.html')
+
+	else:
+		return render(request, 'tumblr_add.html', {'rtpush':form })
+
+
+
+
+
