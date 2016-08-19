@@ -173,8 +173,7 @@ def Push_Rr(request):
 
 					trues = trues+1
 					print Rtlist.delete()
-					Post_status = client.dashboard(since_id= post_id)
-					status =Post_status["meta"]
+					
 
 				
 				return render(request, 'tumblr_add.html', {'rtpush_result': form,'count':trues})
