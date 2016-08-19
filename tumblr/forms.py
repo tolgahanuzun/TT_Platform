@@ -32,3 +32,6 @@ class Post_Rt_Push(forms.ModelForm):
 	class Meta:
 		model = Rt_Push
 		fields = ('blogname','context',)
+
+class T_Url_follow(forms.Form):
+    urlname = forms.CharField(label='Url', max_length=200)
