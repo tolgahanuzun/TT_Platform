@@ -8,10 +8,10 @@ from models import Populer,Rt_Kullanicimodel,Unf_model
 from .forms import Pupuler_Kullanici,Kac_Kullan,Rt_Kullan,Rt_Kullanici,Unf_form
 
 def twitter_api():
-	consumer_key = "UZ73TD950vW8LkpMJfhDAldNM"
-	consumer_secret ="SVBKnAxjS8Eo115rDFbXLR4nKtYT3K2a3j0SYbbGo4i4f5Zbry"
-	access_token = "2489791711-tqhYv947NKPx9fN02BkjzBxRcEzv4JwBMTEYHG6"
-	access_token_secret = "xyeztY09lAo6DTGMJXc02qnQGKYD3n2u1nGUUXWhr3Jit"
+	consumer_key = "e9E8vx9h2rCUwiWgh2GPWzrbh"
+	consumer_secret ="4woQgnJXBbSiDwRFKXqYuixvinqBAZBNMqPfJpYPi1YjyxhsVf"
+	access_token = "2489791711-fZR7jLybQnkDEw7rKiPWsYbOiPJTBSPhiFrOtDf"
+	access_token_secret = "qeYXSnne5Cr9mzLDPGerFqtGrbuWhfxBd35F6Zr0WK6ag"
 	
 	auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 	auth.set_access_token(access_token, access_token_secret)
@@ -107,11 +107,11 @@ def unfollow(request):
 		form3 = Unf_form(request.POST)
 
 		if form3.is_valid():
+			unfusers = []
 			try:	
 				formveri = form3.save()
 				api = twitter_api()
 				friends = api.friends_ids()
-				unfusers = []
 				for x in range(formveri.unf):
 					try:
 						users = api.get_user(friends[x])
@@ -124,7 +124,7 @@ def unfollow(request):
 						unfusers.append("Error")
 			except:
 				unfusers.append("Error")
-				
+
 			return render(request,'twitter_add.html',{'unfusers': unfusers})
 		else:
 			return render(request,'twitter_add.html',{'form3': form3})
