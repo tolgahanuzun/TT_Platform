@@ -1,20 +1,20 @@
 from django.shortcuts import render, get_object_or_404
 from django.template import Template, Context, RequestContext
 from django.http import *   
+from models import Populer,Rt_Kullanicimodel,Unf_model
+from profiles.models import Profile
+from .forms import Pupuler_Kullanici,Kac_Kullan,Rt_Kullan,Rt_Kullanici,Unf_form
 import tweepy
 import time
 import json
-from models import Populer,Rt_Kullanicimodel,Unf_model
-from .forms import Pupuler_Kullanici,Kac_Kullan,Rt_Kullan,Rt_Kullanici,Unf_form
 
-def twitter_api():
-	consumer_key = "e9E8vx9h2rCUwiWgh2GPWzrbh"
-	consumer_secret ="4woQgnJXBbSiDwRFKXqYuixvinqBAZBNMqPfJpYPi1YjyxhsVf"
-	access_token = "2489791711-fZR7jLybQnkDEw7rKiPWsYbOiPJTBSPhiFrOtDf"
-	access_token_secret = "qeYXSnne5Cr9mzLDPGerFqtGrbuWhfxBd35F6Zr0WK6ag"
+def twitter_api(request):
+	fields = Profile.objects.get(user=request.user)
 	
-	auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-	auth.set_access_token(access_token, access_token_secret)
+	auth = tweepy.OAuthHandler(fields.twitter_consumer_keys, 
+		fields.twitter_consumer_secrets)
+	auth.set_access_token(fields.twitter_access_tokens, 
+		fields.twitter_access_token_secrets)
 
 	return tweepy.API(auth)
 
@@ -37,7 +37,7 @@ def twitter_fallow(request):
 
 		if form.is_valid():
 			formveri = form.save()
-			api = twitter_api()
+			api = twitter_api(request)
 			backusers = []
 			Userlist = Populer.objects.all()
 
@@ -78,7 +78,7 @@ def Rt_fallow(request):
 
 		if form2.is_valid():
 			formveri = form2.save()
-			api = twitter_api()
+			api = twitter_api(request)
 			print formveri.rt_limiti
 			rtusers = []
 			Rt_lists = Rt_Kullanicimodel.objects.all()
@@ -110,7 +110,7 @@ def unfollow(request):
 			unfusers = []
 			try:	
 				formveri = form3.save()
-				api = twitter_api()
+				api = twitter_api(request)
 				friends = api.friends_ids()
 				for x in range(formveri.unf):
 					try:
@@ -132,14 +132,8 @@ def unfollow(request):
 		return render(request,'twitter_add.html',{'form3': form3})
 
 
-
-
-
-
-
-
 def trend(request):
-	api = twitter_api()
+	api = twitter_api(request)
 	c_id= 23424969
 	trends= api.trends_place(c_id)
 	data = trends[0]
