@@ -27,23 +27,25 @@ urlpatterns = [
 	url(r'^register/',profile_views.register),
 	url(r'^login/',profile_views.login),
 	url(r'^logout/',profile_views.logout),
-	url(r'^keycreate$', profile_views.keyupdate, name='Key_update'),
+	url(r'^key/tumblr/create$', profile_views.tumblr_key, name='Tumblr_key'),
+	url(r'^key/twitter/create$', profile_views.twitter_key, name='Twitter_key'),
 
 	url(r'^twitter/$',twitter_views.trend),
 	url(r'^twitter/user$',twitter_views.Twitter_User),
-	url(r'^twitter/follow/$', twitter_views.twitter_fallow, name='Twitter_follow'),
-	url(r'^twitter/add/username$', twitter_views.Twitter_User, name='Twitter_User'),
-	url(r'^twitter/rt/$', twitter_views.Rt_fallow, name='Twitter_rt'),
-	url(r'^twitter/add/rt$', twitter_views.Twitter_Rt, name='Twitter_rtadd'),
-	url(r'^twitter/add/unf$', twitter_views.unfollow, name='Twitter_unfollow'),
+	url(r'^twitter/follow/$',twitter_views.twitter_fallow, name='Twitter_follow'),
+	url(r'^twitter/add/username$',twitter_views.Twitter_User, name='Twitter_User'),
+	url(r'^twitter/rt/$',twitter_views.Rt_fallow, name='Twitter_rt'),
+	url(r'^twitter/add/rt$',twitter_views.Twitter_Rt, name='Twitter_rtadd'),
+	url(r'^twitter/add/unf$',twitter_views.unfollow, name='Twitter_unfollow'),
 
 
-	url(r'^tumblr/like$', tumblr_views.Top_Like, name='Tumblr_Like'),
-	url(r'^tumblr/add/img$', tumblr_views.Img_Posts, name='Tumblr_imgpost'),
-	url(r'^tumblr/add/rt$', tumblr_views.Rt_put, name='Tumblr_rtput'),
-	url(r'^tumblr/add/url/follow$', tumblr_views.URL_Follow, name='Tumblr_url_follow'),
-	url(r'^tumblr/post/img$', tumblr_views.Push_Img, name='Tumblr_post'),
-	url(r'^tumblr/post/rt$', tumblr_views.Push_Rr, name='Tumblr_rt_post'),
+	url(r'^tumblr/like$',tumblr_views.get_like, name='Tumblr_Like'),
+	url(r'^tumblr/add/img$',tumblr_views.img_post, name='Tumblr_imgpost'),
+	url(r'^tumblr/add/rt$',tumblr_views.rt_get, name='Tumblr_rtput'),
+	url(r'^tumblr/add/url/follow$',tumblr_views.url_follow_put,
+		name='Tumblr_url_follow'),
+	url(r'^tumblr/post/img$',tumblr_views.img_push, name='Tumblr_post'),
+	url(r'^tumblr/post/rt$',tumblr_views.rt_push, name='Tumblr_rt_post'),
 
 
 
