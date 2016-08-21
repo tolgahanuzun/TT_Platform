@@ -6,7 +6,7 @@ from django.db import models
 
 class Like_Limit(models.Model):
 	like = models.IntegerField(default=1,validators=[
-            MaxValueValidator(50),
+            MaxValueValidator(100),
             MinValueValidator(1)
         ])
 
@@ -28,10 +28,10 @@ class Img_Content(models.Model):
 		return "%s" % (self.blogname)
 
 class Rt_Put(models.Model):
-	rt_link = models.CharField(max_length=250)
+	rtlink = models.CharField(max_length=250)
 
 	def __unicode__(self):
-		return "%s" % (self.rt_link)
+		return "%s" % (self.rtlink)
 
 class Rt_Push(models.Model):
 	blogname = models.CharField(max_length=100,)
