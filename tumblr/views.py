@@ -2,212 +2,194 @@
 from django.shortcuts import render, get_object_or_404
 from django.template import Template, Context, RequestContext
 from django.http import *   
-from .forms import Like,Img_Post_f,Img_Post_push,Post_Rt_Put,Post_Rt_Push,T_Url_follow
-from .models import Img_Post,Rt_Put
 from bs4 import BeautifulSoup
 from profiles.models import Profile
+from .models import Img_Post,Rt_Put
+from .forms import Like,Img_Post_Get,Img_Post_Push,Rt_Post_Put,Rt_Post_Push,Url_Follow
 import urllib
 import re
 import pytumblr
 
-def ApiClient(request):
+def api_client(request):
 	fields = Profile.objects.get(user=request.user)
-	api = pytumblr.TumblrRestClient(fields.consumer_keys,
-			fields.consumer_secrets,
-			fields.access_tokens,
-			fields.access_token_secrets
+	api = pytumblr.TumblrRestClient(fields.tumblr_consumer_keys,
+			fields.tumblr_consumer_secrets,
+			fields.tumblr_access_tokens,
+			fields.tumblr_access_token_secrets
 			)
 	return api
 
-
-
-def Top_Like(request):
-
+def get_like(request):
 	form = Like()
+	
 	if request.method == "POST":
-
-		client = ApiClient(request)
+		client = api_client(request)
 		form = Like(request.POST)
 		like_user = []
+		
 		if form.is_valid():
 			formdata = form.save()
+
 			try:
-				Dashboard = client.dashboard(limit=formdata.like)
-				Data = Dashboard["posts"]
+				dashboard = client.dashboard(limit=formdata.like)
+				data = dashboard["posts"]
+				
 				try:
 					for likes in range(0,formdata.like):
-						Data_key = Data[likes]["reblog_key"]
-						Data_id  = Data[likes]["id"]
-						list_like = client.like(Data_id, Data_key)
-						like_user.append(Data[likes]["blog"]["name"])
-						
+						data_key = data[likes]["reblog_key"]
+						data_id  = data[likes]["id"]
+						list_like = client.like(data_id, data_key)
+						like_user.append(data[likes]["blog"]["name"])
+
 					return render(request, 'tumblr.html', {'like_user': like_user})
 				except:
 					error = "For Error"
+
 			except:
-				error = "Client Error"	
+				error = "Client Error"
+
 		else:
-			error = "Valid Error"
+			error = "Valid Error"	
+
 		return render(request,'tumblr.html',{'error': error})
+
 	else:
 		return render(request, 'tumblr_add.html', {'form': form})
 
-def Img_Posts(request):
-
-	form = Img_Post_f()
+def img_post(request):
+	form = Img_Post_Get()
+	
 	if request.method == "POST":
-
-		client = ApiClient(request)
-		form = Img_Post_f(request.POST)
+		client = api_client(request)
+		form = Img_Post_Get(request.POST)
 		status_post = []
+		
 		if form.is_valid():
 			formveri = form.save()
-			form = Img_Post_f()
+			form = Img_Post_Get()
 			return render(request, 'tumblr_add.html', {'imgform':form})
 		else:
 			return render(request, 'tumblr_add.html', {'imgform': form})
+
 	else:
 		return render(request, 'tumblr_add.html', {'imgform': form})
 
-def Push_Img(request):
-
-	form = Img_Post_push()
+def img_push(request):
+	form = Img_Post_Push()
+	
 	if request.method == "POST":
-		form = Img_Post_push(request.POST)
+		form = Img_Post_Push(request.POST)
+		
 		if form.is_valid():
-			client = ApiClient(request)
-			Imglists = Img_Post.objects.all()
-
-
+			client = api_client(request)
+			imglists = Img_Post.objects.all()
+			
 			try:
 				formveri = form.save()
 				veri =formveri.context.encode('utf-8')
-				print type(veri)
-				trues = 0
-				for Imglist in Imglists:
-					try:
-						
+				COUNT = 0
+				for imglist in imglists:
 						post_id= client.create_photo(formveri.blogname, 
 						state="queue",
 						tags=formveri.tag.split(","),
-						source=Imglist,
+						source=imglist,
 						caption=formveri.context.encode('utf-8'),
-						format="html",
-						)
-						
-						trues = trues+1
-						print Imglist.delete()
-						Post_status = client.dashboard(since_id= post_id)
-						status =Post_status["meta"]
-					except:
-						print "error 2"
-
-				return render(request, 'tumblr_add.html', {'imgpush_result': form,'count':trues})
-
+						format="html")
+						imglist.delete()
+				return render(request, 'tumblr_add.html', {
+					'imgpush_result': form,
+					'count':COUNT
+					})
 			except:		
-				print "error 3"
+				print "Form Error"
 				return render(request, 'index.html')
+
 		else:
-			print "error 3"
+			print "Form Valid Error"
 			return render(request, 'index.html')
 
 	else:
 		return render(request, 'tumblr_add.html', {'imgpush':form })
 
-def Rt_put(request):
-	form = Post_Rt_Put()
+def rt_get(request):
+	form = Rt_Post_Put()
 
 	if request.method == "POST":
-		form = Post_Rt_Put(request.POST)
-		if form.is_valid():
-			formveri = form.save()
-			form = Post_Rt_Put()
+		form = Rt_Post_Put(request.POST)
 
+		if form.is_valid():
+			form.save()
+			form = Rt_Post_Put()
 			return render(request, 'tumblr_add.html', {'rtform':form})
 		else:
 			return render(request, 'tumblr_add.html', {'rtform': form})
+
 	else:
 		return render(request, 'tumblr_add.html', {'rtform': form})
 
+def rt_push(request):
+	form = Rt_Post_Push()
 
-def Push_Rr(request):
-
-	form = Post_Rt_Push()
 	if request.method == "POST":
-		form = Post_Rt_Push(request.POST)
-		if form.is_valid():
-			client = ApiClient(request)
-			Rtlists = Rt_Put.objects.all()
+		form = Rt_Post_Push(request.POST)
 
+		if form.is_valid():
+			client = api_client(request)
+			rtlists = Rt_Put.objects.all()
 
 			try:
 				formveri = form.save()
-
-				trues = 0
-				for Rtlist in Rtlists:
-					str_list=str(Rtlist)
-					
-						
-					post_ids = str_list.split("/reblog/")[1].split("/")[0] 
-
-					rt_id 	 = str_list.split("/reblog/")[1].split("/")[1].split("?")[0]
-					print rt_id,post_ids
-
+				COUNT = 0
+				for rtlist in rtlists:
+					rtlist_str = str(rtlist)
+					post_ids = rtlist_str.split("/reblog/")[1].split("/")[0] 
+					rt_id = rtlist_str.split("/reblog/")[1].split("/")[1].split("?")[0]
 					post_id= client.reblog(formveri.blogname,
 					id=post_ids,
 					reblog_key=rt_id,
-					comment=formveri.context.encode('utf-8')
-					)
-
-					trues = trues+1
-					print Rtlist.delete()
-					
-
-				
-				return render(request, 'tumblr_add.html', {'rtpush_result': form,'count':trues})
-
+					comment=formveri.context.encode('utf-8'))
+					COUNT = COUNT+1
+					rtlist.delete()
+				return render(request, 'tumblr_add.html', {
+					'rtpush_result': form,
+					'count':COUNT
+					})
 			except:		
-				print "error 4"
+				print "Save or Api Error"
 				return render(request, 'index.html')
+
 		else:
-			print "error 3"
+			print "Form valid error"
 			return render(request, 'index.html')
 
 	else:
 		return render(request, 'tumblr_add.html', {'rtpush':form })
 
-def URL_Follow(request):
+def url_follow_put(request):
+	form = Url_Follow()
 
-	form = T_Url_follow()
 	if request.method == "POST":
-		
-		client = ApiClient(request)
-		form = T_Url_follow(request.POST)
-		follow_url_link = []
+		client = api_client(request)
+		form = Url_Follow(request.POST)
+
 		if form.is_valid():
-			
+			follow_url_link = []
 			urlname = request.POST.get('urlname')
-			
 			htmlcode = urllib.urlopen(urlname).read()
 			soup = BeautifulSoup(htmlcode, 'html.parser')
-		
 			urls = []
-
 			for tag in soup.find_all("a",{"class":"tumblelog"}):
 				urls.append(tag['href'])
-
-			lop = soup.find_all("li",class_="like")
-			for hop in lop:
-				urls.append(hop.find("a")['href'])
-
-			i=1
+			likes = soup.find_all("li",class_="like")
+			for like in likes:
+				urls.append(like.find("a")['href'])
 			for url in urls:
 				list_data = client.follow(url)
 				follow_url_link.append(url)
-
 			return render(request, 'tumblr_add.html', {'url_rest':urls})
 		else:
 			return render(request, 'tumblr_add.html', {'url_follow': form})
+			
 	else:
 		return render(request, 'tumblr_add.html', {'url_follow': form})
 
