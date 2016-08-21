@@ -1,5 +1,6 @@
 from django import forms
 from .models import Like_Limit,Img_Post,Img_Content,Rt_Put,Rt_Push
+from django.contrib.auth.models import User
 
 class Like(forms.ModelForm):
 
@@ -33,5 +34,11 @@ class Rt_Post_Push(forms.ModelForm):
 		model = Rt_Push
 		fields = ('blogname','context',)
 
+
+class Rt_Text_Post(forms.Form):
+	rt_blogname = forms.CharField(label='blog', max_length=200)
+
+
+
 class Url_Follow(forms.Form):
-    urlname = forms.CharField(label='Url', max_length=200)
+	urlname = forms.CharField(label='Url', max_length=200)
