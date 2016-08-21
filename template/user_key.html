@@ -1,23 +1,36 @@
 {% extends "base.html" %}
 
 {% block user_key%}
-
-   {% if form %}
+    <br><br><br><br>
+   {% if twitter_form %}
     <h1>Yeni gönderi</h1>
     <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
+        {{ twitter_form.as_p }}
         <button type="submit" class="save btn btn-default">Kaydet</button>
     </form>
     {% endif%}
 
 
-    {% if update %}
+    {% if twitter_update %}
 
     <br><br><br><br>
     <h2> OKEY!!!! </h2>
     {% endif%}
 
+ {% if tumblr_form %}
+    <h1>Yeni gönderi</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ tumblr_form.as_p }}
+        <button type="submit" class="save btn btn-default">Kaydet</button>
+    </form>
+    {% endif%}
 
+
+    {% if tumblr_update %}
+
+    <br><br><br><br>
+    <h2> OKEY!!!! </h2>
+    {% endif%}
 
 
 {% endblock %}
