@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.contrib.auth.models import User
 
 from django.db import models
 
@@ -36,6 +37,7 @@ class Rt_Put(models.Model):
 class Rt_Push(models.Model):
 	blogname = models.CharField(max_length=100,)
 	context = models.TextField()
+	user = models.ForeignKey(User)	
 
 	def __unicode__(self):
 		return "%s" % (self.blogname)
