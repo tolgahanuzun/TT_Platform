@@ -4,8 +4,8 @@ from django.template import Template, Context, RequestContext
 from django.http import *   
 from bs4 import BeautifulSoup
 from profiles.models import Profile
-from .models import Img_Post,Rt_Put
-from .forms import Like,Img_Post_Get,Img_Post_Push,Rt_Post_Put,Rt_Post_Push,Url_Follow
+from .models import Img_Post,Rt_Put,Rt_Push
+from .forms import Like,Img_Post_Get,Img_Post_Push,Rt_Post_Put,Rt_Post_Push,Url_Follow,Rt_Text_Post
 import urllib
 import re
 import pytumblr
@@ -127,18 +127,41 @@ def rt_get(request):
 	else:
 		return render(request, 'tumblr_add.html', {'rtform': form})
 
-def rt_push(request):
-	form = Rt_Post_Push()
+def rt_text_save(request):
+	form = Rt_Post_Push()	
 
 	if request.method == "POST":
 		form = Rt_Post_Push(request.POST)
+
+		if form.is_valid():
+			formveri = form.save(commit=False)
+			formveri.user = request.user
+			formveri.save()
+
+			form = Rt_Post_Push	
+			return render(request, 'tumblr_add.html', {'rt_text_save':form})
+		else:
+			return render(request, 'tumblr_add.html', {'rt_text_save': form})
+
+	else:
+		return render(request, 'tumblr_add.html',{'rt_text_save': form} )
+
+def rt_push(request):
+	form = Rt_Text_Post()
+	
+	Rt_pushs = Rt_Push.objects.filter(user=request.user)
+
+	if request.method == "POST":
+		form = Rt_Text_Post(request.POST)
 
 		if form.is_valid():
 			client = api_client(request)
 			rtlists = Rt_Put.objects.all()
 
 			try:
-				formveri = form.save()
+
+				formveri = Rt_Push.objects.get(id=form.cleaned_data['rt_blogname']) 
+				
 				COUNT = 0
 				for rtlist in rtlists:
 					rtlist_str = str(rtlist)
@@ -147,6 +170,7 @@ def rt_push(request):
 					post_id= client.reblog(formveri.blogname,
 					id=post_ids,
 					reblog_key=rt_id,
+					state="queue",
 					comment=formveri.context.encode('utf-8'))
 					COUNT = COUNT+1
 					rtlist.delete()
@@ -163,7 +187,9 @@ def rt_push(request):
 			return render(request, 'index.html')
 
 	else:
-		return render(request, 'tumblr_add.html', {'rtpush':form })
+		return render(request, 'tumblr_add.html', {
+			'rtpushs':form,
+			'Rt_pushs':Rt_pushs, })
 
 def url_follow_put(request):
 	form = Url_Follow()
