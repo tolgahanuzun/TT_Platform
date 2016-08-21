@@ -36,12 +36,10 @@ class RegistrationForm(UserCreationForm):
 	
 	class Meta:
 		model = User
-		fields = ("first_name", "last_name", "username", "email",  "password1", "password2")
+		fields = ("first_name", "last_name", "username", "email", "password1", "password2")
 	 
-	
 	def save(self, commit=True):
 		user = super(RegistrationForm, self).save(commit=False)
-
 
 		if commit:
 			user.save()
@@ -49,34 +47,51 @@ class RegistrationForm(UserCreationForm):
 		return user
 
 
-
-class KeyCreateForm(forms.Form):
-	first_name = forms.CharField(label=u"First Name", required=True)
-	last_name = forms.CharField(label=u"Last Name", required=True)
-	consumer_keys = forms.CharField(label=u"Consumer keys", required=True)
-	consumer_secrets = forms.CharField(label=u"Consumer secrets", required=True)
-	access_tokens = forms.CharField(label=u"Access Tokens", required=True)
-	access_token_secrets = forms.CharField(label=u"Access token_secrets", required=True)
+class Tumblr_Key_Create(forms.Form):
+	tumblr_consumer_keys = forms.CharField(label=u"Tumblr Consumer keys", required=True)
+	tumblr_consumer_secrets = forms.CharField(label=u"Tumblr Consumer secrets", required=True)
+	tumblr_access_tokens = forms.CharField(label=u"Tumblr Access Tokens", required=True)
+	tumblr_access_token_secrets = forms.CharField(label=u"Tumblr Access token_secrets", required=True)
 
 
 	def __init__(self, *args, **kwargs):
 		self.user = kwargs.pop('user', None)
-		super(KeyCreateForm, self).__init__(*args, **kwargs)
+		super(Tumblr_Key_Create, self).__init__(*args, **kwargs)
 
 	def change(self):
 		user_profile = Profile.objects.get(user=self.user)
-		print 1
 		data = self.cleaned_data
+	
+		user_profile.profile = self.user
+		user_profile.tumblr_consumer_keys = data.get("tumblr_consumer_keys")
+		user_profile.tumblr_consumer_secrets = data.get("tumblr_consumer_secrets")
+		user_profile.tumblr_access_tokens = data.get("tumblr_access_tokens")
+		user_profile.tumblr_access_token_secrets = data.get("tumblr_access_token_secrets")
 
-		self.user.first_name = data.get("first_name")
-		self.user.last_name = data.get("last_name")
-		self.user.save()	
+		user_profile.save()
+
+		return self.user
+
+class Twitter_Key_Create(forms.Form):
+	twitter_consumer_keys = forms.CharField(label=u"Twitter Consumer keys", required=True)
+	twitter_consumer_secrets = forms.CharField(label=u"Twitter Consumer secrets", required=True)
+	twitter_access_tokens = forms.CharField(label=u"Twitter Access Tokens", required=True)
+	twitter_access_token_secrets = forms.CharField(label=u"Twitter Access token_secrets", required=True)
+
+
+	def __init__(self, *args, **kwargs):
+		self.user = kwargs.pop('user', None)
+		super(Twitter_Key_Create, self).__init__(*args, **kwargs)
+
+	def change(self):
+		user_profile = Profile.objects.get(user=self.user)
+		data = self.cleaned_data
 		
 		user_profile.profile = self.user
-		user_profile.consumer_keys = data.get("consumer_keys")
-		user_profile.consumer_secrets = data.get("consumer_secrets")
-		user_profile.access_tokens = data.get("access_tokens")
-		user_profile.access_token_secrets = data.get("access_token_secrets")
+		user_profile.twitter_consumer_keys = data.get("twitter_consumer_keys")
+		user_profile.twitter_consumer_secrets = data.get("twitter_consumer_secrets")
+		user_profile.twitter_access_tokens = data.get("twitter_access_tokens")
+		user_profile.twitter_access_token_secrets = data.get("twitter_access_token_secrets")
 
 		user_profile.save()
 
