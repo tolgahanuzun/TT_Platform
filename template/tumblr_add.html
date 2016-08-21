@@ -42,12 +42,26 @@
     </form>
     {% endif %}
 <!-- -->    
-     {% if rtpush %}
+     {% if rtpushs %}
+     
     <h1>Yeni gönderi</h1>
     <form method="POST" class="post-form">{% csrf_token %}
-        {{ rtpush.as_p }}
+     {% for rtpush in rtpushs  %}
+
+     {% if rtpush.name == "rt_blogname" %}
+         <select name="{{ rtpush.name }}" id="id_{{ rtpush.name }}" 
+                    class="form-control" >
+                        {% for Rt_push in Rt_pushs  %}
+                        <option value="{{ Rt_push.id }}">{{ Rt_push.blogname}}{{ Rt_push.context}} <br> </option>
+                        {% endfor %}
+                    </select>
+
     <button type="submit" class="save btn btn-default">Kaydet</button>
     </form>
+    {% endif %}
+    
+    {% endfor %}
+
     {% endif %}
 
     
@@ -57,6 +71,15 @@
     <h2>{{ count }}</h2>
     
     {% endif %}
+<!-- -->
+ {% if rt_text_save %}
+    <h1>Yeni gönderi</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ rt_text_save.as_p }}
+    <button type="submit" class="save btn btn-default">Kaydet</button>
+    </form>
+    {% endif %}
+
 <!-- -->
      {% if url_follow %}
     <h1>Yeni gönderi</h1>
