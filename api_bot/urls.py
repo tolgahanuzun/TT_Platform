@@ -46,6 +46,8 @@ urlpatterns = [
 		name='Tumblr_url_follow'),
 	url(r'^tumblr/post/img$',tumblr_views.img_push, name='Tumblr_post'),
 	url(r'^tumblr/post/rt$',tumblr_views.rt_push, name='Tumblr_rt_post'),
+	url(r'^tumblr/post/ad_rt_text$',tumblr_views.rt_text_save, name='Tumblr_rt_text'),
+
 
 
 
