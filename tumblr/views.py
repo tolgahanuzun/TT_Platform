@@ -96,6 +96,8 @@ def img_push(request):
 						caption=formveri.context.encode('utf-8'),
 						format="html")
 						imglist.delete()
+						COUNT = COUNT+1
+
 				return render(request, 'tumblr_add.html', {
 					'imgpush_result': form,
 					'count':COUNT
