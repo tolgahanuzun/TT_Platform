@@ -37,28 +37,61 @@
 		
 		<li><a href="{% url 'Tumblr_key' %}" class="top-menu">Tumblr Key</a></li>
 		<li><a href="{% url 'Twitter_key' %}" class="top-menu">Twitter Key</a></li>
-
-
 	</ul>
-
-
-
 
 	</div>
 </div>		
 
 
 {% elif not request.user.is_authenticated %}
-<div class="container">
-	<div class="row">
-		<div class="col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
-			<br><br><br>
-			<h1 class="title">
+ <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <br><br>
+      <br>
+      <h1 class="header center orange-text">TT Platform</h1>
+      <div class="row center">
+        <h5 class="header col s12 light">TT Platform Text</h5>
+      </div>
+      
+      <br><br>
+      <br><br>
+      <br>
 
-			</h1>
-		</div>
-	</div>	
-</div>
+    </div>
+  </div>
+
+
+  <footer class="page-footer orange">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Settings</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by 
+      </div>
+    </div>
+  </footer>
 
 {% endif %}
 
