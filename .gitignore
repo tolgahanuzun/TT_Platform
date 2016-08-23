@@ -2,3 +2,5 @@ db.sqlite3
 *.pyc
 migrations/
 static/js
+static/css
+
