@@ -6,9 +6,11 @@ from bs4 import BeautifulSoup
 from profiles.models import Profile
 from .models import Img_Post,Rt_Put,Rt_Push
 from .forms import Like,Img_Post_Get,Img_Post_Push,Rt_Post_Put,Rt_Post_Push,Url_Follow,Rt_Text_Post
+from threading import Thread
 import urllib
 import re
 import pytumblr
+import time
 
 def api_client(request):
 	fields = Profile.objects.get(user=request.user)
@@ -74,6 +76,23 @@ def img_post(request):
 	else:
 		return render(request, 'tumblr_add.html', {'imgform': form})
 
+class Push_Task(Thread):
+	def __init__(self,imglist,formveri,client):
+		self.imglist = imglist
+		self.formveri = formveri
+		self.client = client
+		super(Push_Task,self).__init__()
+
+	def run(self):
+		
+		self.client.create_photo(self.formveri.blogname, 
+			state="queue",
+			tags=self.formveri.tag.split(","),
+			source=self.imglist,
+			caption=self.formveri.context.encode('utf-8'),
+			format="html")
+
+
 def img_push(request):
 	form = Img_Post_Push()
 	
@@ -86,21 +105,22 @@ def img_push(request):
 			
 			try:
 				formveri = form.save()
-				veri =formveri.context.encode('utf-8')
+				start = time.time()
 				COUNT = 0
+				thread = []
 				for imglist in imglists:
-						post_id= client.create_photo(formveri.blogname, 
-						state="queue",
-						tags=formveri.tag.split(","),
-						source=imglist,
-						caption=formveri.context.encode('utf-8'),
-						format="html")
+						temp = Push_Task(imglist,formveri,client)
+						thread.append(temp)
 						imglist.delete()
+						temp.start()
 						COUNT = COUNT+1
+				for temp in thread:
+					temp.join()
 
 				return render(request, 'tumblr_add.html', {
 					'imgpush_result': form,
-					'count':COUNT
+					'count':COUNT,
+					'time':time.time()-start
 					})
 			except:		
 				print "Form Error"
@@ -112,6 +132,8 @@ def img_push(request):
 
 	else:
 		return render(request, 'tumblr_add.html', {'imgpush':form })
+
+
 
 def rt_get(request):
 	form = Rt_Post_Put()
