@@ -5,6 +5,10 @@
 	{% load static %}
         
         <link rel="stylesheet" href="{% static 'css/materialize.css' %}">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+       
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         
@@ -13,6 +17,18 @@
         <script src="{% static 'js/materialize/materialize.js' %}"></script>
         <script src="{% static 'js/materialize/init.js' %}"></script>
 
+            <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="images/android-desktop.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+    <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileColor" content="#3372DF">
 
         <title>TT Platform</title>
 
@@ -21,10 +37,63 @@
 
 
 {% if request.user.is_authenticated %}
-
-
-
-
+<header>
+      <nav class="top-nav">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title" href="/">HomePage</a></div>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="fa fa-bars"></i></a>
+      </div>
+     <ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">
+    <li class="no-padding">
+      <ul class="collapsible collapsible-accordion">
+        <li class="bold"><a class="collapsible-header  waves-effect waves-teal">Twitter</a>
+          <div class="collapsible-body" style="">
+            <ul>
+                <li><a href="/twitter">Twitter Trends</a></li>
+                <li><a href="{% url 'Twitter_User' %}">Users Add</a></li>
+                <li><a href="{% url 'Twitter_follow' %}">User Follow</a></li>
+                <li><a href="{% url 'Twitter_rtadd' %}">Tweet Add</a></li>
+                <li><a href="{% url 'Twitter_rt' %}">Tweet RT Follow</a></li>        
+                <li><a href="{% url 'Twitter_unfollow' %}">Oto Unfollow</a></li> 
+            </ul>
+          </div>
+        </li>
+      </ul>   
+    </li>
+     <li class="no-padding">
+      <ul class="collapsible collapsible-accordion">
+        <li class="bold"><a class="collapsible-header  waves-effect waves-teal">Tumblr</a>
+          <div class="collapsible-body" style="">
+            <ul>
+                <li><a href="{% url 'Tumblr_Like' %}">Dashboard Like</a></li>
+                <li><a href="{% url 'Tumblr_imgpost' %}">İmage Url Add</a></li> 
+                <li><a href="{% url 'Tumblr_post' %}">İmage Post</a></li> 
+                <li><a href="{% url 'Tumblr_rtput' %}">Reblog Url Add</a></li> 
+                <li><a href="{% url 'Tumblr_rt_text' %}">Reblog Text Template</a></li> 
+                <li><a href="{% url 'Tumblr_rt_post' %}">Reblog Post</a></li> 
+                <li><a href="{% url 'Tumblr_url_follow' %}">Post Notes</a></li> 
+            </ul>
+          </div>
+        </li>
+      </ul>   
+    </li>        
+    <li class="no-padding">
+      <ul class="collapsible collapsible-accordion">
+        <li class="bold"><a class="collapsible-header  waves-effect waves-teal">Api Key </a>
+          <div class="collapsible-body" style="">
+            <ul>
+                <li><a href="{% url 'Tumblr_key' %}">Tumblr Key</a></li>
+                <li><a href="{% url 'Twitter_key' %}">Twitter Key</a></li> 
+            </ul>
+          </div>
+        </li>
+      </ul>   
+    </li>
+    <li class="bold"><a href="/" class="waves-effect waves-teal">BlaBla</a></li>
+  </ul> 
+    </header>
 
 {% elif not request.user.is_authenticated %}
 <body>
@@ -45,9 +114,15 @@
 
 {% endif %}
 
+   
     {% block register %}{% endblock %}
     {% block login %}{% endblock %}
     {% block index %}{% endblock %}
+<main>
+<div class="container">
+<div class="row">
+   
+
     {% block twitter %}{% endblock %}
     {% block twitter_fallow %}{% endblock %}
     {% block twitter_rt %}{% endblock %}
@@ -55,6 +130,12 @@
     {% block tumblr %}{% endblock %}
     {% block user_key %}{% endblock %} 
     {% block twitter_add %}{% endblock %}   
+
+ </div>       
+ </div>
+</main>
+
+
 
 
 
