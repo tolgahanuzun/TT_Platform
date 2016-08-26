@@ -4,43 +4,8 @@
 
 
 {% if request.user.is_authenticated %}
-<div class="container" style="margin-top: 70px;">
 
 
-	<div class="col-sm-9" > 
-		<h3>Twitter</h2>
-	<ul>
-		<li><a href="/twitter">Trends</a></li>	
-		<li><a href="{% url 'Twitter_User' %}" class="top-menu">Add</a></li>
-		<li><a href="{% url 'Twitter_follow' %}" class="top-menu">Follow</a></li>
-		<li><a href="{% url 'Twitter_rtadd' %}" class="top-menu">Add</a></li>
-		<li><a href="{% url 'Twitter_rt' %}" class="top-menu">RT Follow</a></li> 		
-		<li><a href="{% url 'Twitter_unfollow' %}" class="top-menu">Unfollow</a></li> 
-
-	</ul>	
-	<hr>
-		
-	<ul>
-		<li><a href="{% url 'Tumblr_Like' %}" class="top-menu">Like</a></li>
-		<li><a href="{% url 'Tumblr_imgpost' %}" class="top-menu">Add img Link</a></li> 
-		<li><a href="{% url 'Tumblr_post' %}" class="top-menu">Post İmg</a></li> 
-		<li><a href="{% url 'Tumblr_rtput' %}" class="top-menu">Add RT Link</a></li> 
-		<li><a href="{% url 'Tumblr_rt_text' %}" class="top-menu">Add RT Text</a></li> 
-		<li><a href="{% url 'Tumblr_rt_post' %}" class="top-menu">Post RT</a></li> 
-		<li><a href="{% url 'Tumblr_url_follow' %}" class="top-menu">Url check and Follow</a></li> 
-	
-	</ul>
-	
-
-	<hr>
-	<ul>
-		
-		<li><a href="{% url 'Tumblr_key' %}" class="top-menu">Tumblr Key</a></li>
-		<li><a href="{% url 'Twitter_key' %}" class="top-menu">Twitter Key</a></li>
-	</ul>
-
-	</div>
-</div>		
 
 
 {% elif not request.user.is_authenticated %}
