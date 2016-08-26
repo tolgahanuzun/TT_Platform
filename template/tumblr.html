@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 
+
+
+
 {% block tumblr %}
-<div class="container" style="margin-top: 70px;">
+
+
     {% if like_user %}
-<div class="col-sm-4" > 
+
 
 
 	{% for like in like_user %}
@@ -13,16 +17,16 @@
 	{% endfor %}
 
 
-</div>
+
 {% endif %}
 
  {% if error %}
-<div class="col-sm-4" > 
+
 
 {{ error }} 
 
-</div>
+
 {% endif %}
 
-</div>
+
 {% endblock %}
