@@ -47,18 +47,18 @@
      {% if rtpushs %}
      
     <h1>Yeni gönderi</h1>
-    <form method="POST" class="post-form">{% csrf_token %}
+    <form method="POST" >{% csrf_token %}
      {% for rtpush in rtpushs  %}
 
      {% if rtpush.name == "rt_blogname" %}
-         <select name="{{ rtpush.name }}" id="id_{{ rtpush.name }}" 
-                    class="form-control" >
+    <div class="input-field coll s12"> 
+         <select name="{{ rtpush.name }}" id="id_{{ rtpush.name }}" style="display: block"  >
                         {% for Rt_push in Rt_pushs  %}
                         <option value="{{ Rt_push.id }}">{{ Rt_push.blogname}}{{ Rt_push.context}} <br> </option>
                         {% endfor %}
                     </select>
-
     <button type="submit" class="save btn btn-default">Kaydet</button>
+    </div>
     </form>
     {% endif %}
     
