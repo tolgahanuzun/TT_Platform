@@ -6,7 +6,7 @@
 
 ### Responsive Design
 
- [![Alt text](https://img.youtube.com/vi/dYzDQ9cgMiA/0.jpg)](https://www.youtube.com/watch?v=dYzDQ9cgMiA)
+ [![Alt text](https://j.gifs.com/R6GEnL.gif)](https://www.youtube.com/watch?v=dYzDQ9cgMiA)
 
 ## Todo List
 - Readme Update!
