@@ -13,7 +13,6 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script src="{% static 'js/index.js' %}"></script>
         <script src="{% static 'js/materialize/materialize.js' %}"></script>
         <script src="{% static 'js/materialize/init.js' %}"></script>
 
@@ -29,12 +28,31 @@
 <header>
       <nav class="top-nav">
         <div class="container">
-          <div class="nav-wrapper"><a class="page-title" href="/">HomePage</a></div>
+          <div class="nav-wrapper">
+          <a class="page-title" href="/">HomePage</a>
+          
+          </div>
         </div>
       </nav>
       <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="fa fa-bars"></i></a>
       </div>
+
+
      <ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">
+
+     <div class="card blue-grey darken-1" style="margin:0;border-radius:0;">
+            <div class="card-content white-text">
+            <div class="chip">
+            <img src="http://materializecss.com/images/yuna.jpg" alt="Contact Person">
+            {{request.user}}
+            </div>
+              
+              <p>User Profile</p>
+            </div>
+            <div class="card-action">
+              <a href="/admin">User Profile</a>
+            </div>
+          </div>
     <li class="no-padding">
       <ul class="collapsible collapsible-accordion">
         <li class="bold"><a class="collapsible-header  waves-effect waves-teal">Twitter</a>
