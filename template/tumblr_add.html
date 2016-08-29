@@ -19,12 +19,24 @@
     </form>
     {% endif %}
 <!-- -->
-    {% if imgpush %}
+    {% if imgpushs %}
     <h1>Yeni gönderi</h1>
     <form method="POST" class="post-form">{% csrf_token %}
-        {{ imgpush.as_p }}
+    {% for imgpush in imgpushs  %}
+
+     {% if imgpush.name == "img_blogname" %}
+    <div class="input-field coll s12"> 
+         <select name="{{ imgpush.name }}" id="id_{{ imgpush.name }}" style="display: block"  >
+                        {% for img_content in img_contents  %}
+                        <option value="{{ img_content.id }}">{{ img_content.blogname}}{{ img_content.context}} <br> </option>
+                        {% endfor %}
+                    </select>
     <button type="submit" class="save btn btn-default">Kaydet</button>
+    </div>
     </form>
+    {% endif %}
+    
+    {% endfor %}
     {% endif %}
    
     {% if imgpush_result %}
@@ -83,6 +95,18 @@
     {% endif %}
 
 <!-- -->
+
+{% if img_text_save %}
+    <h1>Yeni gönderi</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ img_text_save.as_p }}
+    <button type="submit" class="save btn btn-default">Kaydet</button>
+    </form>
+    {% endif %}
+
+<!-- -->
+
+
      {% if url_follow %}
     <h1>Yeni gönderi</h1>
     <form method="POST" class="post-form">{% csrf_token %}
