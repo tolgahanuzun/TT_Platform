@@ -4,8 +4,8 @@ from django.template import Template, Context, RequestContext
 from django.http import *   
 from bs4 import BeautifulSoup
 from profiles.models import Profile
-from .models import Img_Post,Rt_Put,Rt_Push
-from .forms import Like,Img_Post_Get,Img_Post_Push,Rt_Post_Put,Rt_Post_Push,Url_Follow,Rt_Text_Post
+from .models import Img_Post,Rt_Put,Rt_Push,Img_Content
+from .forms import Like,Img_Post_Get,Img_Post_Push,Img_Text_Post,Rt_Post_Put,Rt_Post_Push,Url_Follow,Rt_Text_Post
 from threading import Thread
 import urllib
 import re
@@ -58,16 +58,17 @@ def get_like(request):
 	else:
 		return render(request, 'tumblr_add.html', {'form': form})
 
+
 def img_post(request):
 	form = Img_Post_Get()
 	
 	if request.method == "POST":
-		client = api_client(request)
+		
 		form = Img_Post_Get(request.POST)
 		status_post = []
 		
 		if form.is_valid():
-			formveri = form.save()
+			form.save()
 			form = Img_Post_Get()
 			return render(request, 'tumblr_add.html', {'imgform':form})
 		else:
@@ -75,6 +76,25 @@ def img_post(request):
 
 	else:
 		return render(request, 'tumblr_add.html', {'imgform': form})
+
+def img_text_save(request):
+	form = Img_Post_Push()	
+
+	if request.method == "POST":
+		form = Img_Post_Push(request.POST)
+
+		if form.is_valid():
+			formveri = form.save(commit=False)
+			formveri.user = request.user
+			formveri.save()
+
+			form = Img_Post_Push	
+			return render(request, 'tumblr_add.html', {'img_text_save':form})
+		else:
+			return render(request, 'tumblr_add.html', {'img_text_save': form})
+
+	else:
+		return render(request, 'tumblr_add.html',{'img_text_save': form} )		
 
 class Push_Task(Thread):
 	def __init__(self,imglist,formveri,client):
@@ -90,24 +110,29 @@ class Push_Task(Thread):
 			tags=self.formveri.tag.split(","),
 			source=self.imglist,
 			caption=self.formveri.context.encode('utf-8'),
+			link =self.formveri.link,
 			format="html")
 
 
 def img_push(request):
-	form = Img_Post_Push()
+	form = Img_Text_Post()
 	
+	img_content = Img_Content.objects.filter(user=request.user)
+
 	if request.method == "POST":
-		form = Img_Post_Push(request.POST)
+		form = Img_Text_Post(request.POST)
 		
 		if form.is_valid():
 			client = api_client(request)
 			imglists = Img_Post.objects.all()
 			
 			try:
-				formveri = form.save()
+				
+				
 				start = time.time()
 				COUNT = 0
 				thread = []
+				formveri = Img_Content.objects.get(id=form.cleaned_data['img_blogname'])
 				for imglist in imglists:
 						temp = Push_Task(imglist,formveri,client)
 						thread.append(temp)
@@ -131,7 +156,7 @@ def img_push(request):
 			return render(request, 'index.html')
 
 	else:
-		return render(request, 'tumblr_add.html', {'imgpush':form })
+		return render(request, 'tumblr_add.html', {'imgpushs':form,'img_contents':img_content })
 
 
 
@@ -191,6 +216,7 @@ def rt_push(request):
 					rtlist_str = str(rtlist)
 					post_ids = rtlist_str.split("/reblog/")[1].split("/")[0] 
 					rt_id = rtlist_str.split("/reblog/")[1].split("/")[1].split("?")[0]
+
 					post_id= client.reblog(formveri.blogname,
 					id=post_ids,
 					reblog_key=rt_id,
