@@ -24,6 +24,9 @@ class Img_Content(models.Model):
 	blogname = models.CharField(max_length=100,)
 	context = models.TextField()
 	tag = models.CharField(max_length=500,)
+	link = models.CharField(max_length=500,)
+	user = models.ForeignKey(User)
+
 
 	def __unicode__(self):
 		return "%s" % (self.blogname)
