@@ -16,10 +16,13 @@ class Img_Post_Get(forms.ModelForm):
 
 class Img_Post_Push(forms.ModelForm):
 
-
 	class Meta:
 		model  = Img_Content
-		fields = ('blogname','context','tag',) 
+		fields = ('blogname','context','tag','link',) 
+
+class Img_Text_Post(forms.Form):
+	img_blogname = forms.CharField(label='blog', max_length=200)		
+
 
 class Rt_Post_Put(forms.ModelForm):
 
