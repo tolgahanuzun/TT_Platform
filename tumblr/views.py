@@ -213,17 +213,21 @@ def rt_push(request):
 				
 				COUNT = 0
 				for rtlist in rtlists:
-					rtlist_str = str(rtlist)
-					post_ids = rtlist_str.split("/reblog/")[1].split("/")[0] 
-					rt_id = rtlist_str.split("/reblog/")[1].split("/")[1].split("?")[0]
+					try:
+						rtlist_str = str(rtlist)
+						post_ids = rtlist_str.split("/reblog/")[1].split("/")[0] 
+						rt_id = rtlist_str.split("/reblog/")[1].split("/")[1].split("?")[0]
 
-					post_id= client.reblog(formveri.blogname,
-					id=post_ids,
-					reblog_key=rt_id,
-					state="queue",
-					comment=formveri.context.encode('utf-8'))
-					COUNT = COUNT+1
-					rtlist.delete()
+						post_id= client.reblog(formveri.blogname,
+						id=post_ids,
+						reblog_key=rt_id,
+						state="queue",
+						comment=formveri.context.encode('utf-8'))
+						COUNT = COUNT+1
+						rtlist.delete()
+					except:
+						print "url error"
+						
 				return render(request, 'tumblr_add.html', {
 					'rtpush_result': form,
 					'count':COUNT
