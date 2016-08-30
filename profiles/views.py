@@ -61,7 +61,7 @@ def register(request):
 
 			if  form.is_valid():
 				form.save()       
-				return render(request,"register.html",
+				return render(request,"/index",
 								   locals())
 			else:
 				form = RegistrationForm()
