@@ -20,24 +20,26 @@
        
 </head>
 
-
+<body>
 {% if request.user.is_authenticated %}
 <header>
-      <nav class="top-nav">
-        <div class="container">
-          <div class="nav-wrapper">
+      <nav class="top-nav light-blue darken-4">
+          <div class="container">
+        <div class="nav-wrapper">
           <a class="page-title" href="/">HomePage</a>
+          <a href="/logout" class="page-logout right">Logout</a>
           
           </div>
         </div>
       </nav>
+
       <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="fa fa-bars"></i></a>
       </div>
 
 
      <ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">
 
-     <div class="card blue-grey darken-1" style="margin:0;border-radius:0;">
+     <div class="card light-blue darken-2 " style="margin:0;border-radius:0;">
             <div class="card-content white-text">
 
         <div class="col s12 m8 offset-m2 l6 offset-l3">
@@ -56,19 +58,16 @@
         </div>
       </div>  
 
-
-
-              
             </div>
             <div class="card-action">
-              <a href="/admin">Profile Setting</a>
+              <a href="/admin" class="white-text">Profile Setting</a>
             </div>
           </div>
     <li class="no-padding">
       <ul class="collapsible collapsible-accordion">
         <li class="bold"><a class="collapsible-header  waves-effect waves-teal">Twitter</a>
           <div class="collapsible-body" style="">
-            <ul>
+            <ul class="light-blue">
                 <li><a href="/twitter">Twitter Trends</a></li>
                 <li><a href="{% url 'Twitter_User' %}">Users Add</a></li>
                 <li><a href="{% url 'Twitter_follow' %}">User Follow</a></li>
@@ -82,16 +81,36 @@
     </li>
      <li class="no-padding">
       <ul class="collapsible collapsible-accordion">
-        <li class="bold"><a class="collapsible-header  waves-effect waves-teal">Tumblr</a>
-          <div class="collapsible-body" style="">
-            <ul>
+        <li class="bold"><a class="collapsible-header  waves-effect waves-teal ">Tumblr</a>
+          <div class="collapsible-body ">
+            <ul class="light-blue">
                 <li><a href="{% url 'Tumblr_Like' %}">Dashboard Like</a></li>
-                <li><a href="{% url 'Tumblr_imgpost' %}">İmage Url Add</a></li> 
-                <li><a href="{% url 'Tumblr_img_text' %}">İmage Text Template</a></li> 
-                <li><a href="{% url 'Tumblr_post' %}">İmage Post</a></li> 
-                <li><a href="{% url 'Tumblr_rtput' %}">Reblog Url Add</a></li> 
-                <li><a href="{% url 'Tumblr_rt_text' %}">Reblog Text Template</a></li> 
-                <li><a href="{% url 'Tumblr_rt_post' %}">Reblog Post</a></li> 
+                    <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion light-blue">
+                      <li class="bold"><a class="collapsible-header  waves-effect waves-teal">İmage</a>
+                        <div class="collapsible-body" style="">
+                          <ul >
+                            <li><a href="{% url 'Tumblr_imgpost' %}" style="color: #b5b5b5;" >Url Add</a></li> 
+                            <li><a href="{% url 'Tumblr_img_text' %}" style="color: #b5b5b5;">Text Template</a></li> 
+                            <li><a href="{% url 'Tumblr_post' %}" style="color: #b5b5b5;" >Post</a></li> 
+                          </ul>
+                        </div>
+                      </li>
+                    </ul>   
+                  </li>
+                  <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion light-blue">
+                      <li class="bold"><a class="collapsible-header  waves-effect waves-teal">Reblog</a>
+                        <div class="collapsible-body" >
+                          <ul>
+                            <li><a href="{% url 'Tumblr_rtput' %}" style="color: #b5b5b5;" >Url Add</a></li> 
+                            <li><a href="{% url 'Tumblr_rt_text' %}" style="color: #b5b5b5;" >Text Template</a></li> 
+                            <li><a href="{% url 'Tumblr_rt_post' %}" style="color: #b5b5b5;" >Post</a></li> 
+                          </ul>
+                        </div>
+                      </li>
+                    </ul>   
+                  </li>            
                 <li><a href="{% url 'Tumblr_url_follow' %}">Post Notes</a></li> 
             </ul>
           </div>
@@ -102,7 +121,7 @@
       <ul class="collapsible collapsible-accordion">
         <li class="bold"><a class="collapsible-header  waves-effect waves-teal">Api Key </a>
           <div class="collapsible-body" style="">
-            <ul>
+            <ul class="light-blue">
                 <li><a href="{% url 'Tumblr_key' %}">Tumblr Key</a></li>
                 <li><a href="{% url 'Twitter_key' %}">Twitter Key</a></li> 
             </ul>
@@ -115,19 +134,21 @@
     </header>
 
 {% elif not request.user.is_authenticated %}
-<body>
-<nav class="light-blue lighten-2" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">Social Platform APİ Test</a>
+
+<nav class="top-nav light-blue lighten-2" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo page-title" >TT Platform</a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="/login/">Login</a></li>
-        <li><a href="/register">Register</a></li>
+        <li><a class="page-logout" href="/login/">Login</a></li>
+        <li><a class="page-logout" href="/register">Register</a></li>
       </ul>
 
       <ul id="nav-mobile" class="side-nav">
         <li><a href="/login">Login</a></li>
         <li><a href="/register">Register</a></li>
       </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+      <div class="container">
+      <a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="fa fa-bars"></i></a>
+      </div>
     </div>
   </nav>
 
@@ -153,11 +174,6 @@
  </div>       
  </div>
 </main>
-
-
-
-
-
 
 
 </body>
