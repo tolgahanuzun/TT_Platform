@@ -1,0 +1,168 @@
+/**
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+body {
+    background-color: #fcfcfc;
+}
+
+nav.top-nav {
+    height: 122px;
+    box-shadow: none;
+}
+
+
+header, main, footer {
+    padding-left: 300px;
+}
+
+
+
+@media only screen and (max-width: 992px)
+{header, main, footer {
+    padding-left: 0;
+}}
+
+@media only screen and (min-width: 993px)
+{.container {width:85%;}}   
+
+a.button-collapse.top-nav.full {
+    line-height: 122px;
+}
+
+a.button-collapse.top-nav {
+    position: absolute;
+    text-align: center;
+    height: 48px;
+    width: 48px;
+    left: 7.5%;
+    top: 0;
+    float: none;
+    margin-left: 1.5rem;
+    color: #fff;
+    font-size: 36px;
+    z-index: 2;
+}
+
+nav.top-nav a.page-title {
+    line-height: 122px;
+    font-size: 48px;
+}
+
+nav.top-nav a.page-logout {
+    line-height: 122px;
+    font-size: 30px;
+}
+
+@media only screen and (max-width: 600px)
+{nav.top-nav a.page-title {
+    line-height: 122px;
+    font-size: 30px;
+}
+
+nav.top-nav a.page-logout {
+    line-height: 122px;
+    font-size: 18px;
+}}
+
+@media only screen and (max-width: 400px)
+{nav.top-nav a.page-title {
+    line-height: 100px;
+    font-size: 25px;
+}
+
+nav.top-nav a.page-logout {
+    line-height: 100px;
+    font-size: 14px;
+}
+nav.top-nav {
+    height: 100px;
+    box-shadow: none;
+}
+a.button-collapse.top-nav.full {
+    font-size: 25px;
+    line-height: 100px;
+    width: 0px;
+    left: 0;
+
+    }
+
+}
+
+
+nav a {
+    -webkit-font-smoothing: antialiased;
+}
+
+ul.side-nav.fixed ul.collapsible-accordion {
+    background-color: #FFF;
+}
+
+ul.side-nav.fixed ul.collapsible-accordion a.collapsible-header {
+    padding: 0 30px;
+}
+
+ul.side-nav.fixed li a {
+    font-size: 13px;
+    line-height: 44px;
+    height: 44px;
+    padding: 0 30px;
+}
+
+
+ul.side-nav.fixed {
+    overflow: hidden;
+}
+
+ul.side-nav.fixed:hover {
+    overflow-y: auto;
+}
+
+ul.side-nav.fixed li a {
+    font-size: 13px;
+    line-height: 44px;
+    height: 44px;
+    padding: 0 30px;
+}
+
+ul.side-nav.fixed li {
+    line-height: 44px;
+}
+
+.bold>a {
+    font-weight: bold;
+}
+
+@media only screen and (max-width: 992px)
+{.side-nav.fixed {
+    -webkit-transform: translateX(-105%);
+    transform: translateX(-105%);
+}
+
+nav .nav-wrapper {
+    text-align: center;
+}
+}
+
+.side-nav.fixed {
+    left: 0;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    position: fixed;
+}
+
+
+.navmenu{
+    color: #b5b5b5;
+}
