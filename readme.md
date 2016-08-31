@@ -6,7 +6,7 @@
 
 ### Responsive Design
 
- [![Responsive](https://j.gifs.com/318RRp.gif)]
+ [![Responsive](https://j.gifs.com/318RRp.gif)](https://www.youtube.com/watch?v=qrzD1zi8QN0)
  
  [![Tumblr Use](https://j.gifs.com/OYxlYE.gif)](https://www.youtube.com/watch?v=qrzD1zi8QN0)
 
