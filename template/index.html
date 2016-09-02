@@ -1,20 +1,19 @@
 {% extends "base.html" %}
 
 {% block index%}
-
+{% load static %}
 
 {% if request.user.is_authenticated %}
 <main>
  <div class="container">
  <div class="row ">
-<div class="col s12 m7 l8">
+<div class="col s12 m6 l6">
  <div class="card">
     <div class="card-image waves-effect waves-block waves-light">
-      <img class="activator" src="http://www.tumblrturkiye.com/wp-content/uploads/2016/04/tumblr-logo-rectangle-white-on-blue-839x385px.png">
+      <img class="activator" src="{% static 'images/tumblr.png' %}">
     </div>
     <div class="card-content">
       <span class="card-title activator grey-text text-darken-4">Tumblr Tools<i class="material-icons right">more_vert</i></span>
-      <p><a href="#">This is a link</a></p>
     </div>
     <div class="card-reveal">
       <span class="card-title grey-text text-darken-4">How to Tumblr Tools<i class="material-icons right">close</i></span>
@@ -23,10 +22,10 @@
   </div>
   </div>
 
- <div class="col  s12 m5 l4">
+ <div class="col  s12 m6 l6">
  <div class="card">
     <div class="card-image waves-effect waves-block waves-light">
-      <img class="activator" src="http://www.veteknoloji.net/resimler/haberler/twitter-a-yeni-ozellik-geldi.jpg">
+      <img class="activator" src="{% static 'images/twitter.jpg' %}">
     </div>
     <div class="card-content">
       <span class="card-title activator grey-text text-darken-4">Twitter Tools<i class="material-icons right">more_vert</i></span>
@@ -37,6 +36,22 @@
     </div>
   </div>
   </div>
+
+<div class="col s12  m12 l6 offset-l3">
+ <div class="card">
+    <div class="card-image waves-effect waves-block waves-light">
+      <img class="activator" src="{% static 'images/twitter.jpg' %}">
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">Twitter Tools<i class="material-icons right">more_vert</i></span>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">How to Twiter Tools<i class="material-icons right">close</i></span>
+      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+    </div>
+  </div>
+  </div>
+
 </div>
 
 </div>
