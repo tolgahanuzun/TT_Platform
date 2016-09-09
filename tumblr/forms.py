@@ -35,7 +35,7 @@ class Rt_Post_Push(forms.ModelForm):
 
 	class Meta:
 		model = Rt_Push
-		fields = ('blogname','context',)
+		fields = ('blogname','context','tag',)
 
 
 class Rt_Text_Post(forms.Form):
