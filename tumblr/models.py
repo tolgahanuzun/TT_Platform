@@ -40,6 +40,7 @@ class Rt_Put(models.Model):
 class Rt_Push(models.Model):
 	blogname = models.CharField(max_length=100,)
 	context = models.TextField()
+	tag = models.CharField(max_length=500,)
 	user = models.ForeignKey(User)	
 
 	def __unicode__(self):
