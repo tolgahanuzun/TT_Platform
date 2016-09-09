@@ -222,6 +222,7 @@ def rt_push(request):
 						id=post_ids,
 						reblog_key=rt_id,
 						state="queue",
+						tags=formveri.tag.split(","),
 						comment=formveri.context.encode('utf-8'))
 						COUNT = COUNT+1
 						rtlist.delete()
