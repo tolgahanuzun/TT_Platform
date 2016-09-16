@@ -21,6 +21,7 @@
 </head>
 
 <body>
+
 {% if request.user.is_authenticated %}
 <header>
       <nav class="top-nav light-blue darken-4">
@@ -133,6 +134,23 @@
   </ul> 
     </header>
 
+    <main>
+<div class="container">
+<div class="row">
+   
+
+    {% block twitter %}{% endblock %}
+    {% block twitter_fallow %}{% endblock %}
+    {% block twitter_rt %}{% endblock %}
+    {% block tumblr_add %}{% endblock %}
+    {% block tumblr %}{% endblock %}
+    {% block user_key %}{% endblock %} 
+    {% block twitter_add %}{% endblock %}   
+
+ </div>       
+ </div>
+</main>
+
 {% elif not request.user.is_authenticated %}
 
 <nav class="top-nav light-blue lighten-2" role="navigation">
@@ -154,26 +172,11 @@
 
 {% endif %}
 
-   
     {% block register %}{% endblock %}
     {% block login %}{% endblock %}
     {% block index %}{% endblock %}
-<main>
-<div class="container">
-<div class="row">
-   
 
-    {% block twitter %}{% endblock %}
-    {% block twitter_fallow %}{% endblock %}
-    {% block twitter_rt %}{% endblock %}
-    {% block tumblr_add %}{% endblock %}
-    {% block tumblr %}{% endblock %}
-    {% block user_key %}{% endblock %} 
-    {% block twitter_add %}{% endblock %}   
 
- </div>       
- </div>
-</main>
 
 
 </body>
