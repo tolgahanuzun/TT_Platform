@@ -31,7 +31,7 @@ def login(request):
 		return render(request, 'login.html', context)
 
 	else:
-		return HttpResponseRedirect("/index/")
+		return HttpResponseRedirect("/")
 
 def logout(request):
 	context = {}
@@ -61,7 +61,7 @@ def register(request):
 
 			if  form.is_valid():
 				form.save()       
-				return render(request,"/index",
+				return render(request,"login.html",
 								   locals())
 			else:
 				form = RegistrationForm()
@@ -72,7 +72,7 @@ def register(request):
 			return render(request, "register.html",{'form':form})
 
 	else:
-		return HttpResponseRedirect("/index/")    
+		return HttpResponseRedirect("/")    
 
 def home(request):
 	if request.user.is_authenticated():
